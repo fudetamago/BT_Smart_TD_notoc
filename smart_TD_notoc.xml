@@ -128,7 +128,8 @@
       <Variable name="post.info.font.color" description="日付・タグの文字色" type="color" default="#888888" value="#888888"/>
       <Variable name="post.info.background.color" description="日付・タグの背景色" type="color" default="#fbfbfb" value="#fbfbfb"/>
       <Variable name="post.info.border.color" description="日付・タグの枠線色" type="color" default="#eeeeee" value="#eeeeee"/>
-      <Variable name="post.info.link.color" description="日付・タグのリンク色" type="color" default="#dfdfdf" value="#dfdfdf"/>
+      <Variable name="post.info.link.color" description="日付・タグのリンク色" type="color" default="#888" value="#888"/>
+      <Variable name="post.info.hover.link.color" description="日付・タグのリンク色（ホバー）" type="color" default="transparent" value="transparent"/>
       <Variable name="post.body.font.color" description="投稿の文字色" type="color" default="#333333" value="#333333"/>
       <Variable name="post.body.background.color" description="投稿の背景色" type="color" default="#ffffff" value="#ffffff"/>
       <Variable name="post.body.link.color" description="リンク色" type="color" default="#0000ee" value="#0000ee"/>
@@ -156,7 +157,7 @@
 
     <Group description="コメント全体">
       <Variable name="comment.title.color" description="コメント見出しの文字色" type="color" default="#ffffff" value="#ffffff"/>
-      <Variable name="comment.title.background.color" description="コメント見出しの背景色" type="color" default="#333333" value="#333333"/>
+      <Variable name="comment.title.background.color" description="コメント見出しの背景色" type="color" default="#0078ba" value="#0078ba"/>
       <Variable name="comment.background.color" description="コメント全体の背景色" type="color" default="#ffffff" value="#ffffff"/>
     </Group>
 
@@ -170,14 +171,14 @@
     </Group>
 
     <Group description="コメント内容（ポップアップ）">
-      <Variable name="comment.number.color" description="コメント件数の色" type="color" default="#666666" value="#666666"/>
+      <Variable name="comment.number.color" description="投稿者名の色" type="color" default="#333333" value="#333333"/>
       <Variable name="comment.button.font.color" description="コメント表示ボタンの文字色" type="color" default="#333333" value="#333333"/>
       <Variable name="comment.button.background.color" description="コメント表示ボタンの背景色" type="color" default="#eeeeee" value="#eeeeee"/>
     </Group>
 
     <Group description="パンくずリスト">
       <Variable name="breadcrumbs.font.color" description="パンくずリストの文字色" type="color" default="#666666" value="#666666"/>
-      <Variable name="breadcrumbs.link.color" description="パンくずリストのリンク色" type="color" default="#999999" value="#999999"/>
+      <Variable name="breadcrumbs.link.color" description="パンくずリストのリンク色" type="color" default="#0095d9" value="#0095d9"/>
     </Group>
 
     <Group description="サイドバー">
@@ -1102,7 +1103,7 @@
     }
 
     .single-post-tag a:hover {
-      background: $(post.body.hover.link.color);
+      background: $(post.info.hover.link.color);
       opacity: 0.6;
     }
 
@@ -1361,8 +1362,13 @@
       border-bottom: dashed 1px $(comment.subtitle.color);
     }
 
+    .comments .comments-content .comment-thread {
+      margin: 15px 0 8px;
+    }
     .comment-area p {
       font-size: 13px;
+      line-height: 1.5em;
+      letter-spacing: 1px;
     }
 
     /* 埋め込み時
@@ -1383,6 +1389,12 @@
 
    .comments .comments-content .user a {
       font-size: 14px;
+      color: #0075c2;
+    }
+
+    .comments .comments-content .icon.blog-author {
+      width: 0;
+      margin: 0;
     }
 
     /* コメントの投稿日時 */
@@ -1390,11 +1402,28 @@
       color: $(comment.date.color);
     }
 
+    /* 返信ボタン・削除ボタンの位置 */
+    .secondary-text {
+      margin-left: 5px;
+    }
+
     /* コメントの内容 */
     .comments .comments-content {
       font-size: 13px;
       color: $(comment.color);
       margin-bottom: 5px;
+    }
+
+    /* Bloggerユーザーアイコン */
+    .avatar-image-container img {
+      width: 40px;
+      height: 40px;
+      margin-top: -3px;
+    }
+
+    /* コメント内容 */
+    .comments .comments-content .comment-content {
+      margin: 0 0 8px 8px;
     }
 
     /* 返信の背景 */
@@ -1407,26 +1436,103 @@
       padding-right:5%;
      }
 
+    /* 返信・削除ボタン */
+    a.comment-reply{
+      font-size: 12px;
+      color: #0075c2;
+    }
+
+    span.blog-admin a {
+      font-size: 12px;
+      color: #0075c2;
+    }
+
     /* ポップアップ時
     ---------------------------------------------------------------------------- */
 
+    /* 投稿ユーザー名 */
     .comment-author {
-    font-size: 13px;
-    color: $(comment.number.color);
-    font-weight: normal;
+      font-size: 13px;
+      color: $(comment.number.color);
+      font-weight: 600;
     }
+
+    /* 投稿ボタン */
 
     .comment-footer {
       margin: 10px;
     }
 
     .comment-footer a {
-    display: block;
-    color: $(comment.button.font.color);
-    background: $(comment.button.background.color);
-    font-weight: bold;
-    text-align: center;
-    padding: 10px 0;
+      display: block;
+      color: $(comment.button.font.color);
+      background: $(comment.button.background.color);
+      font-weight: bold;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    #comments-block.avatar-comment-indent {
+      margin-top: 30px;
+    }
+
+    /* Bloggerユーザーアイコン */
+    .avatar-hovercard img {
+      width: 38px;
+      height: 38px;
+      margin-top: -20px;
+    }
+
+    /* 匿名ユーザー */
+    .avatar-image-container {
+      border-radius: 50%;
+      width: 35px;
+      height:35px;
+      background-image: url(https://1.bp.blogspot.com/-gEZa-sN4Mo0/X2mCgCFs4kI/AAAAAAAAcIM/sb-zCn5u7-UVqAJK2i9DUJOO9KHRcK-1gCLcBGAsYHQ/s0/ba.png);
+      background-repeat:no-repeat;
+      background-size: contain;
+      border: 1px solid #eee;
+      margin-right: 10px;
+    }
+    
+    /* ユーザー名 */
+    #comments .avatar-comment-indent .comment-author {
+      padding-left: 50px;
+    }
+
+    /* コメント */
+    .comment-body p {
+      padding-left: 4px;
+      margin-bottom: -5px;
+    }
+
+    /* コメントパーマリンク */
+    .comment-timestamp a {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: normal;
+      color: $(comment.date.color);
+      background: #fff;
+      padding: 4px;
+    }
+    
+    .comment-timestamp a:hover {
+      opacity: 0.6;
+    }
+
+    /* 削除ボタン */
+    .comment-delete img {
+      width: 0;
+      height: 0;
+    }
+    .comment-delete::after {
+      content:"削除";
+      margin-left: -2px;
+    }
+
+    /* 削除コメント */
+    .deleted-comment {
+      font-size: 12px;
     }
 
     /* レスポンシブ（タブレット小縦） */
@@ -3150,6 +3256,17 @@
                 </div>
               </b:includable>
             <b:includable id='commentDeleteIcon' var='comment'>
+            <span expr:class='&quot;item-control &quot; + data:comment.adminClass'>
+                 <b:if cond='data:showCmtPopup'>
+                   <div class='goog-toggle-button'>
+                     <div class='goog-inline-block comment-action-icon'/>
+                   </div>
+                 <b:else/>
+                   <a class='comment-delete' expr:href='data:comment.deleteUrl' expr:title='data:top.deleteCommentMsg'>
+                     <img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+                   </a>
+                 </b:if>
+               </span>
               </b:includable>
             <b:includable id='comment_count_picker' var='post'>
                 <b:if cond='data:post.commentSource == 1'>
@@ -3219,6 +3336,23 @@
                             <data:comment.author/>
                             <data:commentPostedByMsg/>
                           </dt>
+                          <dd class='comment-body' expr:id='data:widget.instanceId + data:comment.cmtBodyIdPostfix'>
+                           <b:if cond='data:comment.isDeleted'>
+                             <span class='deleted-comment'><data:comment.body/></span>
+                           <b:else/>
+                             <p>
+                               <data:comment.body/>
+                             </p>
+                           </b:if>
+                         </dd>
+                         <dd class='comment-footer'>
+                           <span class='comment-timestamp'>
+                             <a expr:href='data:comment.url' title='comment permalink'>
+                               <data:comment.timestamp/>
+                             </a>
+                             <b:include data='comment' name='commentDeleteIcon'/>
+                           </span>
+                         </dd>
                         </b:loop>
                       </dl>
                     </div>
